@@ -188,6 +188,13 @@ class Form implements Renderable
     protected $isSoftDeletes = false;
 
     /**
+     * After saved, page will redirect to this url.
+     *
+     * @var string
+     */
+    protected $redirectUrl = '';
+
+    /**
      * Create a new form instance.
      *
      * @param $model
@@ -935,6 +942,19 @@ class Form implements Renderable
     }
 
     /**
+     * Get all attributes including hiding fields and casting fields.
+     *
+     * @param Model $model
+     * @return array
+     */
+    private function getAllModelAttributes(Model $model)
+    {
+        $attributes = $model->getAttributes();
+
+        return array_merge($attributes, $model->toArray(), $model->attributesToArray());
+    }
+
+    /**
      * Set after getting editing model callback.
      *
      * @param Closure $callback
@@ -1080,7 +1100,7 @@ class Form implements Renderable
 
 //        static::doNotSnakeAttributes($this->model);
 
-        $data = $this->model->toArray();
+        $data = $this->getAllModelAttributes($this->model);
 
         $this->builder->fields()->each(function (Field $field) use ($data) {
             if (!in_array($field->column(), $this->ignored)) {

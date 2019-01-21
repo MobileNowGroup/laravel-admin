@@ -518,7 +518,11 @@ class Grid
 
         $collection = $this->processFilter(false);
 
-        $data = $collection->toArray();
+        $data = $collection->map(function (Eloquent $model) {
+            $attributes = $model->getAttributes();
+
+            return array_merge($attributes, $model->toArray(), $model->attributesToArray());
+        })->toArray();
 
         $this->prependRowSelectorColumn();
         $this->appendActionsColumn();
