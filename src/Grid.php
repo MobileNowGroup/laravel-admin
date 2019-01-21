@@ -520,6 +520,7 @@ class Grid
 
         $data = $collection->map(function (Eloquent $model) {
             $attributes = $model->getAttributes();
+            $model->setHidden([]);
 
             return array_merge($attributes, $model->toArray(), $model->attributesToArray());
         })->toArray();
