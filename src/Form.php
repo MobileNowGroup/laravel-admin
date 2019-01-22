@@ -950,9 +950,8 @@ class Form implements Renderable
     private function getAllModelAttributes(Model $model)
     {
         $attributes = $model->getAttributes();
-        $model->setHidden([]);
 
-        return array_merge($attributes, $model->toArray(), $model->attributesToArray());
+        return array_merge($attributes, $model->toArray(), $model->setHidden([])->attributesToArray());
     }
 
     /**
