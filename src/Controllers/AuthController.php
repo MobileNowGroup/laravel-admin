@@ -114,6 +114,12 @@ class AuthController extends Controller
 
         $form = new Form(new $class());
 
+        $form->builder()->getFooter()
+            ->disableReset()
+            ->disableCreatingCheck()
+            ->disableEditingCheck()
+            ->disableViewCheck();
+
         $form->display('username', trans('admin.username'));
         $form->text('name', trans('admin.name'))->rules('required');
         $form->image('avatar', trans('admin.avatar'));
