@@ -1364,6 +1364,10 @@ class Form implements Renderable
             $segments = array_slice($segments, 0, $slice);
         }
 
+        if($segments[0] == 'http:' && config('admin.secure') == true) {
+            $segments [0] = 'https:' ;
+        }
+
         return implode('/', $segments);
     }
 
